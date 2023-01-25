@@ -3,7 +3,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 const Home: NextPage = () => {
-  const tk = localStorage.getItem("aeToken");
   return (
     <div>
       <Head>
@@ -48,14 +47,13 @@ const Home: NextPage = () => {
                   >
                     Login with Collab.Land
                   </a>
-                  {tk && (
-                    <Link
-                      href="/roles"
-                      className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-yellow-600 to-pink-500  text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
-                    >
-                      See Communities
-                    </Link>
-                  )}
+
+                  <Link
+                    href="/roles"
+                    className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-yellow-600 to-pink-500  text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
+                  >
+                    See Communities
+                  </Link>
                 </div>
               </div>
 
