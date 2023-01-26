@@ -22,30 +22,38 @@ const Roles: NextPage = () => {
       aeToken = localStorage.getItem("aeToken") ?? "";
     }
     if (aeToken) {
-      const options = {
-        method: "GET",
-        headers: {
-          authorization: `AE ${aeToken}`,
-        },
-      };
-      fetch(
-        "https://api.collab.land/account/administrated-communities",
-        options
-      )
-        .then((response) => response.json())
-        .then((response) => {
-          console.log("fetch response", response);
-          if (response?.error) {
-            setError(response?.error);
+      // check if data has been saved in local storage else fetch data from server
+      if (localStorage.getItem("communities")) {
+        setCommunities(JSON.parse(localStorage.getItem("communities") ?? ""));
+      } else {
+        const options = {
+          method: "GET",
+          headers: {
+            authorization: `AE ${aeToken}`,
+          },
+        };
+        fetch(
+          "https://api.collab.land/account/administrated-communities",
+          options
+        )
+          .then((response) => response.json())
+          .then((response) => {
+            console.log("fetch response", response);
+            if (response?.error) {
+              setError(response?.error);
+              console.log(error);
+            } else {
+              setCommunities(response.items);
+              localStorage.setItem(
+                "communities",
+                JSON.stringify(response.items)
+              );
+            }
+          })
+          .catch((error) => {
             console.log(error);
-          } else {
-            setCommunities(response.items);
-            localStorage.setItem("user", JSON.stringify(response));
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          });
+      }
     } else {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,62 +70,66 @@ const Roles: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="text-white">
-        <section className="bg-gray-50 dark:bg-gray-900 ">
-          <div className="flex flex-wrap -m-3 p-32">
-            {communities.map((community: CommunityType, index) => {
-              return (
-                <div key={index} className="p-4 xl:w-1/3 md:w-1/2 w-full">
-                  <div className=" w-full rounded-md bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-1">
-                    <div className="h-full p-6  bg-gray-900 flex flex-col relative overflow-hidden">
-                      <div className="justify-between sm:flex">
-                        <div>
-                          <h1 className="md:text-3xl lg:text-5xl text-gray-200 pb-4 mb-4 border-b border-gray-800 leading-none">
-                            {community.name}
-                          </h1>
+        <section className="dark:bg-gray-900 h-auto ">
+          {communities.length > 0 ? (
+            <div className="flex flex-wrap -m-3 p-32">
+              {communities.map((community: CommunityType, index) => {
+                return (
+                  <div key={index} className="p-4 xl:w-1/3 md:w-1/2 w-full">
+                    <div className=" w-full rounded-md bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-1">
+                      <div className="h-full p-6  bg-gray-900 flex flex-col relative overflow-hidden">
+                        <div className="justify-between sm:flex">
+                          <div>
+                            <h1 className="md:text-3xl lg:text-5xl text-gray-200 pb-4 mb-4 border-b border-gray-800 leading-none">
+                              {community.name}
+                            </h1>
+                          </div>
+
+                          <div className="ml-3 hidden flex-shrink-0 sm:block">
+                            <img
+                              alt="Server Icon"
+                              src={community.serverImage}
+                              className="h-16 w-16 rounded-lg object-cover shadow-sm bg-white"
+                            />
+                          </div>
                         </div>
 
-                        <div className="ml-3 hidden flex-shrink-0 sm:block">
-                          <img
-                            alt="Server Icon"
-                            src={community.serverImage}
-                            className="h-16 w-16 rounded-lg object-cover shadow-sm bg-white"
-                          />
-                        </div>
+                        <p className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-500 to-yellow-500 text-xl">
+                          {community.owner}
+                        </p>
+                        <br />
+                        {community.roles.map((role: RoleType, index) => {
+                          return (
+                            <p
+                              key={index}
+                              className="flex items-center text-gray-200 mb-2"
+                            >
+                              <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-dxt-accents-3 text-white rounded-full flex-shrink-0">
+                                <svg
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2.5"
+                                  className="w-3 h-3"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path d="M20 6L9 17l-5-5"></path>
+                                </svg>
+                              </span>
+                              {role.name}
+                            </p>
+                          );
+                        })}
                       </div>
-
-                      <p className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-500 to-yellow-500 text-xl">
-                        {community.owner}
-                      </p>
-                      <br />
-                      {community.roles.map((role: RoleType, index) => {
-                        return (
-                          <p
-                            key={index}
-                            className="flex items-center text-gray-200 mb-2"
-                          >
-                            <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-dxt-accents-3 text-white rounded-full flex-shrink-0">
-                              <svg
-                                fill="none"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2.5"
-                                className="w-3 h-3"
-                                viewBox="0 0 24 24"
-                              >
-                                <path d="M20 6L9 17l-5-5"></path>
-                              </svg>
-                            </span>
-                            {role.name}
-                          </p>
-                        );
-                      })}
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          ) : (
+            <h1>We are fetching your communities...</h1>
+          )}
         </section>
       </main>
     </div>
