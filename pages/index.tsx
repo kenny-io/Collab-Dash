@@ -43,7 +43,7 @@ const Home: NextPage = () => {
                 </p>
                 <div className="flex sm:flex-row flex-col gap-2">
                   <Link
-                    href="https://login.collab.land/?redirect_uri=http://localhost:3000/roles"
+                    href="https://login.collab.land/?redirect_uri=https://collab-communities.netlify.app/roles"
                     className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-yellow-600 to-pink-500  text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
                   >
                     Login with Collab.Land
