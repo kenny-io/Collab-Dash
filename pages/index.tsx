@@ -3,7 +3,16 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
 const Home: NextPage = () => {
+  const [communities, setCommunities] = useState([]);
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    setUrl(window.location.href);
+    if (localStorage.getItem("communities")) {
+      setCommunities(JSON.parse(localStorage.getItem("communities") ?? ""));
+    }
+  }, []);
   return (
     <div>
       <Head>
@@ -38,23 +47,27 @@ const Home: NextPage = () => {
                   in one place
                 </h1>
                 <p className="leading-normal text-base md:text-2xl mb-8 text-center md:text-left text-gray-200 ">
-                  Connect your wallet, authenticate with Discord, and see all
-                  your communities and roles.
+                  Connect your wallet, authenticate with Discord, and see your
+                  communities and roles.
                 </p>
                 <div className="flex sm:flex-row flex-col gap-2">
                   <Link
-                    href="https://login.collab.land/?redirect_uri=https://collab-communities.netlify.app/roles"
-                    className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-yellow-600 to-pink-500  text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
+                    href={`https://login.collab.land/?redirect_uri=${encodeURIComponent(
+                      url + "/roles"
+                    )}`}
+                    className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-yellow-600 to-pink-500 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
                   >
                     Login with Collab.Land
                   </Link>
-
-                  <Link
-                    href="/roles"
-                    className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-purple-600 to-green-500  text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
-                  >
-                    See Communities
-                  </Link>
+                  {/* show button if communities are present */}
+                  {communities.length > 0 && (
+                    <Link
+                      href="/roles"
+                      className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-purple-600 to-green-500  text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
+                    >
+                      See Communities
+                    </Link>
+                  )}
                 </div>
               </div>
 

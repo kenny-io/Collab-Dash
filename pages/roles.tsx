@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { getQueryParam } from "../utils";
+import Link from "next/link";
 
 const Roles: NextPage = () => {
   type CommunityType = {
@@ -69,7 +70,16 @@ const Roles: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="text-white">
+      <main className="text-white bg-slate-800">
+        {/* add a home button on the top left */}
+        <div className="flex justify-between ">
+          <Link
+            href="/"
+            className="hover:text-gray-600 border-b text-gray-200 mb-6 border-emerald-300 font-bold py-2 px-4 rounded-l"
+          >
+            Home
+          </Link>
+        </div>
         <section className="dark:bg-gray-900 h-auto ">
           {communities.length > 0 ? (
             <div className="flex flex-wrap -m-3 p-32">
@@ -128,7 +138,15 @@ const Roles: NextPage = () => {
               })}
             </div>
           ) : (
-            <h1>We are fetching your communities...</h1>
+            <section className="bg-gray-900 text-white h-screen">
+              <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-lg text-center">
+                  <h2 className="text-3xl font-bold sm:text-4xl">
+                    Fetching your communities...
+                  </h2>
+                </div>
+              </div>
+            </section>
           )}
         </section>
       </main>
