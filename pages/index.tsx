@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const Home: NextPage = () => {
   const [communities, setCommunities] = useState([]);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState('');
   useEffect(() => {
     setUrl(window.location.href);
-    if (localStorage.getItem("communities")) {
-      setCommunities(JSON.parse(localStorage.getItem("communities") ?? ""));
+    if (localStorage.getItem('communities')) {
+      setCommunities(JSON.parse(localStorage.getItem('communities') ?? ''));
     }
   }, []);
   return (
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
                   See your <br />
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-500 to-yellow-500">
                     Collab.Land Communities
-                  </span>{" "}
+                  </span>{' '}
                   <br />
                   in one place
                 </h1>
@@ -52,8 +52,8 @@ const Home: NextPage = () => {
                 </p>
                 <div className="flex sm:flex-row flex-col gap-2">
                   <Link
-                    href={`https://login.collab.land/?redirect_uri=${encodeURIComponent(
-                      url + "/roles"
+                    href={`https://login-qa.collab.land/?redirect_uri=${encodeURIComponent(
+                      url + '/roles'
                     )}`}
                     className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-yellow-600 to-pink-500 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
                   >

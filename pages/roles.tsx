@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { useEffect, useState } from "react";
-import { getQueryParam } from "../utils";
-import Link from "next/link";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import { getQueryParam } from '../utils';
+import Link from 'next/link';
 
 const Roles: NextPage = () => {
   type CommunityType = {
@@ -13,40 +13,40 @@ const Roles: NextPage = () => {
     serverImage: string;
   };
   type RoleType = { name: string; id: number };
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [communities, setCommunities] = useState([]);
   useEffect(() => {
-    let aeToken = getQueryParam("aeToken");
-    if (aeToken !== "") {
-      localStorage.setItem("aeToken", aeToken);
+    let aeToken = getQueryParam('aeToken');
+    if (aeToken !== '') {
+      localStorage.setItem('aeToken', aeToken);
     } else {
-      aeToken = localStorage.getItem("aeToken") ?? "";
+      aeToken = localStorage.getItem('aeToken') ?? '';
     }
     if (aeToken) {
       // check if data has been saved in local storage else fetch data from server
-      if (localStorage.getItem("communities")) {
-        setCommunities(JSON.parse(localStorage.getItem("communities") ?? ""));
+      if (localStorage.getItem('communities')) {
+        setCommunities(JSON.parse(localStorage.getItem('communities') ?? ''));
       } else {
         const options = {
-          method: "GET",
+          method: 'GET',
           headers: {
             authorization: `AE ${aeToken}`,
           },
         };
         fetch(
-          "https://api.collab.land/account/administrated-communities",
+          'https://api-qa.collab.land/account/administrated-communities',
           options
         )
           .then((response) => response.json())
           .then((response) => {
-            console.log("fetch response", response);
+            console.log('fetch response', response);
             if (response?.error) {
               setError(response?.error);
               console.log(error);
             } else {
               setCommunities(response.items);
               localStorage.setItem(
-                "communities",
+                'communities',
                 JSON.stringify(response.items)
               );
             }
