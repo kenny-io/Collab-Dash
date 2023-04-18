@@ -53,7 +53,7 @@ const Home: NextPage = () => {
                 <div className="flex sm:flex-row flex-col gap-2">
                   <Link
                     href={`https://login-qa.collab.land/?redirect_uri=${encodeURIComponent(
-                      url + '/roles'
+                      url + 'roles'
                     )}`}
                     className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-yellow-600 to-pink-500 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
                   >
