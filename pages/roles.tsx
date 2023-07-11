@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { useEffect, useState } from "react";
-import { getQueryParam } from "../utils";
-import Link from "next/link";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import { getQueryParam } from '../utils';
+import Link from 'next/link';
 
 const Roles: NextPage = () => {
   type CommunityType = {
@@ -30,11 +30,11 @@ const Roles: NextPage = () => {
 
   type RoleType = { name: string; id: number };
   const [user, setUser] = useState<UserType>({
-    id: "",
-    client_id: "",
-    user_profile: { global_name: "", avatar: "" },
+    id: '',
+    client_id: '',
+    user_profile: { global_name: '', avatar: '' },
   });
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [communities, setCommunities] = useState([]);
   const [userWallet, setUserWallet] = useState([]);
   const [userCommunities, setUserCommunities] = useState([]);
@@ -46,31 +46,31 @@ const Roles: NextPage = () => {
   }
   useEffect(() => {
     let accessToken = new URLSearchParams(
-      (location.hash || "").replace("#", ""),
-    ).get("access_token");
+      (location.hash || '').replace('#', '')
+    ).get('access_token');
     if (accessToken) {
-      console.log("access token", accessToken);
+      console.log('access token', accessToken);
       const options = {
-        method: "GET",
+        method: 'GET',
         headers: {
           authorization: `Bearer ${accessToken}`,
         },
       };
       const getUserCommunities = fetch(
-        "https://api.collab.land/account/administrated-communities",
-        options,
+        'https://api.collab.land/account/administrated-communities',
+        options
       );
       const getUserDetails = fetch(
-        "https://api.collab.land/account/me",
-        options,
+        'https://api.collab.land/account/me',
+        options
       );
       const getUserWallet = fetch(
-        "https://api.collab.land/account/wallets",
-        options,
+        'https://api.collab.land/account/wallets',
+        options
       );
       const getCommunities = fetch(
-        "https://api.collab.land/account/communities",
-        options,
+        'https://api.collab.land/account/communities',
+        options
       );
 
       Promise.all([
@@ -83,7 +83,7 @@ const Roles: NextPage = () => {
           return Promise.all(
             responses.map(function (response) {
               return response.json();
-            }),
+            })
           );
         })
         .then((data) => {
@@ -95,16 +95,16 @@ const Roles: NextPage = () => {
           if (user !== null) {
             // const avatarUrl = `https://cdn.discordapp.com/avatars/${user.client_id}/${user.user_profile.avatar}.png`;
             setAvatarUrl(
-              "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+              'https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
             );
           } else {
             setAvatarUrl(
-              "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+              'https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
             );
           }
         });
     } else {
-      console.log("no access token");
+      console.log('no access token');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -117,7 +117,7 @@ const Roles: NextPage = () => {
           name="description"
           content="See all your Collab.Land data in one place"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/mh.png" />
       </Head>
       <div className="grid grid-cols-1 gap-4 p-8 lg:grid-cols-[120px_1fr] lg:gap-8">
         <div className="h-32 text-black ">
@@ -139,8 +139,8 @@ const Roles: NextPage = () => {
                 <div className="flex items-center gap-4">
                   <div className="relative">
                     <label className="sr-only" htmlFor="search">
-                      {" "}
-                      Search{" "}
+                      {' '}
+                      Search{' '}
                     </label>
 
                     <input
@@ -188,10 +188,10 @@ const Roles: NextPage = () => {
 
               <div className="mt-8">
                 <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                  Welcome{" "}
+                  Welcome{' '}
                   {user && user.user_profile.global_name
                     ? user.user_profile.global_name
-                    : "User"}
+                    : 'User'}
                   !
                 </h1>
               </div>
@@ -272,7 +272,10 @@ const Roles: NextPage = () => {
                       const remainingRoles = community.roles.length - MAX_ROLES;
 
                       return (
-                        <div key={index} className="p-4 xl:w-1/3 md:w-1/2 w-full">
+                        <div
+                          key={index}
+                          className="p-4 xl:w-1/3 md:w-1/2 w-full"
+                        >
                           <div className="w-full rounded-md bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-1">
                             <div className="h-full p-6 bg-gray-900 flex flex-col relative overflow-hidden">
                               <div className="justify-between sm:flex">
@@ -358,7 +361,10 @@ const Roles: NextPage = () => {
                   <div>
                     {userCommunities.map((community: CommunityType, index) => {
                       return (
-                        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+                        <div
+                          key={index}
+                          className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8"
+                        >
                           <div className="mx-auto max-w-lg text-center">
                             <fieldset className="space-y-4">
                               <legend className="sr-only">Delivery</legend>
@@ -389,7 +395,7 @@ const Roles: NextPage = () => {
                     })}
                   </div>
                 ) : (
-                  <p>You don't belong to any community</p>
+                  <p>You don&apos;t belong to any community</p>
                 )}
               </div>
             </section>

@@ -1,23 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const Home: NextPage = () => {
   const [communities, setCommunities] = useState([]);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState('');
   useEffect(() => {
     setUrl(window.location.href);
-    if (localStorage.getItem("communities")) {
-      setCommunities(JSON.parse(localStorage.getItem("communities") ?? ""));
+    if (localStorage.getItem('communities')) {
+      setCommunities(JSON.parse(localStorage.getItem('communities') ?? ''));
     }
   }, []);
 
   return (
     <div>
       <Head>
-        <title>Communities</title>
+        <title>Collab Dash</title>
         <meta
           name="description"
           content="See all you Collab.Land communities and roles"
@@ -43,17 +43,18 @@ const Home: NextPage = () => {
                   See all your <br />
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-500 to-yellow-500">
                     Collab.Land Data
-                  </span>{" "}
+                  </span>{' '}
                   <br />
                   in one place
                 </h1>
                 <p className="leading-normal text-base md:text-2xl mb-8 text-center md:text-left text-gray-200 ">
-                  Login with Collab.Land to see all your data, communities and roles
+                  Login with Collab.Land to see all your data, communities and
+                  roles
                 </p>
                 <div className="flex sm:flex-row flex-col gap-2">
                   <Link
-                    href={`https://api.collab.land/oauth2/authorize?client_id=ZAUrqzkDjTTOoGV7&response_type=token&scope=user:wallet:read+user:community:read+user:community:read+user:read+community:read+token-gating&redirect_uri=${encodeURIComponent(
-                      url + "roles",
+                    href={`https://api.collab.land/oauth2/authorize?client_id=bC0w2AJoU0jYYOVO&response_type=token&scope=user:wallet:read+user:community:read+user:community:read+user:read+community:read+token-gating&redirect_uri=${encodeURIComponent(
+                      url + 'roles'
                     )}`}
                     className="mx-auto lg:mx-0 hover: bg-gradient-to-r from-yellow-600 to-pink-500 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
                   >
