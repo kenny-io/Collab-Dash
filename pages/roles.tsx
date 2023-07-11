@@ -19,6 +19,7 @@ const Roles: NextPage = () => {
     user_profile: {
       global_name: string;
       avatar: string;
+      username: string;
     };
   };
   type WalletType = {
@@ -32,7 +33,7 @@ const Roles: NextPage = () => {
   const [user, setUser] = useState<UserType>({
     id: '',
     client_id: '',
-    user_profile: { global_name: '', avatar: '' },
+    user_profile: { global_name: '', avatar: '', username: '' },
   });
   const [avatarUrl, setAvatarUrl] = useState('');
   const [communities, setCommunities] = useState([]);
@@ -189,10 +190,13 @@ const Roles: NextPage = () => {
               <div className="mt-8">
                 <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
                   Welcome{' '}
-                  {user && user.user_profile.global_name
-                    ? user.user_profile.global_name
+                  {user !== null
+                    ? user.user_profile.global_name !== null
+                      ? user.user_profile.global_name
+                      : user.user_profile.username !== null
+                      ? user.user_profile.username
+                      : 'User'
                     : 'User'}
-                  !
                 </h1>
               </div>
             </div>
@@ -238,7 +242,10 @@ const Roles: NextPage = () => {
                             </div>
                             <div className="ml-4">
                               <h3 className="text-lg leading-6 font-medium text-white">
-                                0x...{truncate(wallet.address, 10)}
+                                {/* show if wallet is connected */}
+                                {wallet
+                                  ? `0x...${truncate(wallet.address, 10)}`
+                                  : 'No wallet address found'}
                               </h3>
                               <p className="mt-2 text-base leading-6 text-gray-300">
                                 {wallet.walletType}
@@ -254,7 +261,7 @@ const Roles: NextPage = () => {
                 )}
               </div>
             </section>
-            <section className="dark:bg-gray-900 h-auto">
+            <section className="dark:bg-gray-900">
               <div className="max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:py-16 lg:px-8">
                 <div className="max-w-xl">
                   <h2 className="text-3xl font-bold sm:text-4xl">
@@ -284,14 +291,6 @@ const Roles: NextPage = () => {
                                     {community.name}
                                   </h1>
                                 </div>
-                                {/* 
-                              <div className="ml-3 hidden flex-shrink-0 sm:block">
-                                <img
-                                  alt="Server Icon"
-                                  src={community.serverImage}
-                                  className="h-16 w-16 rounded-lg object-cover shadow-sm bg-white"
-                                />
-                              </div> */}
                               </div>
 
                               <p className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-500 to-yellow-500 text-xl">
@@ -334,11 +333,11 @@ const Roles: NextPage = () => {
                     })}
                   </div>
                 ) : (
-                  <section className="bg-gray-900 text-white h-screen">
+                  <section className="bg-gray-900 text-white h-auto">
                     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
                       <div className="mx-auto max-w-lg text-center">
                         <h2 className="text-3xl font-bold sm:text-4xl">
-                          Fetching your data...
+                          No Communities
                         </h2>
                       </div>
                     </div>
@@ -381,7 +380,8 @@ const Roles: NextPage = () => {
                                   className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500"
                                 >
                                   <p className="text-gray-700">
-                                    {community.id}
+                                    {(community && community.name) ||
+                                      community.id}
                                   </p>
                                   <p className="text-gray-900">
                                     {community.pk}
