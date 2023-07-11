@@ -80,7 +80,6 @@ const Roles: NextPage = () => {
         getCommunities,
       ])
         .then((responses) => {
-          // Get a JSON object from each of the responses
           return Promise.all(
             responses.map(function (response) {
               return response.json();
@@ -88,20 +87,10 @@ const Roles: NextPage = () => {
           );
         })
         .then((data) => {
-          // Log the data to the console
-          // You would do something with both sets of data here
-          console.log(data);
-          localStorage.setItem("admin-communities", JSON.stringify(data[0].items));
-          localStorage.setItem("user", JSON.stringify(data[1]));
-          localStorage.setItem("wallet", JSON.stringify(data[2]));
-          localStorage.setItem("communities", JSON.stringify(data[3]));
           setCommunities(data[0].items);
           setUserWallet(data[2].items);
           setUserCommunities(data[3].items);
           setUser(data[1]);
-          console.log(user);
-          console.log(data[1]);
-          
 
           if (user !== null) {
             // const avatarUrl = `https://cdn.discordapp.com/avatars/${user.client_id}/${user.user_profile.avatar}.png`;
@@ -192,7 +181,7 @@ const Roles: NextPage = () => {
                   <img
                     alt="Man"
                     src={avatarUrl}
-                     className="h-10 w-10 rounded-full object-cover"
+                    className="h-10 w-10 rounded-full object-cover"
                   />
                 </a>
               </div>
@@ -277,22 +266,22 @@ const Roles: NextPage = () => {
                   </p>
                 </div>
                 {communities.length > 0 ? (
-                <div className="flex flex-wrap -m-3 p-32">
-                  {communities.map((community: CommunityType, index) => {
-                    const rolesToShow = community.roles.slice(0, MAX_ROLES);
-                    const remainingRoles = community.roles.length - MAX_ROLES;
+                  <div className="flex flex-wrap -m-3 p-32">
+                    {communities.map((community: CommunityType, index) => {
+                      const rolesToShow = community.roles.slice(0, MAX_ROLES);
+                      const remainingRoles = community.roles.length - MAX_ROLES;
 
-                    return (
-                      <div key={index} className="p-4 xl:w-1/3 md:w-1/2 w-full">
-                        <div className="w-full rounded-md bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-1">
-                          <div className="h-full p-6 bg-gray-900 flex flex-col relative overflow-hidden">
-                            <div className="justify-between sm:flex">
-                              <div>
-                                <h1 className="md:text-3xl lg:text-5xl text-gray-200 pb-4 mb-4 border-b border-gray-800 leading-none">
-                                  {community.name}
-                                </h1>
-                              </div>
-{/* 
+                      return (
+                        <div key={index} className="p-4 xl:w-1/3 md:w-1/2 w-full">
+                          <div className="w-full rounded-md bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-1">
+                            <div className="h-full p-6 bg-gray-900 flex flex-col relative overflow-hidden">
+                              <div className="justify-between sm:flex">
+                                <div>
+                                  <h1 className="md:text-3xl lg:text-5xl text-gray-200 pb-4 mb-4 border-b border-gray-800 leading-none">
+                                    {community.name}
+                                  </h1>
+                                </div>
+                                {/* 
                               <div className="ml-3 hidden flex-shrink-0 sm:block">
                                 <img
                                   alt="Server Icon"
@@ -300,57 +289,57 @@ const Roles: NextPage = () => {
                                   className="h-16 w-16 rounded-lg object-cover shadow-sm bg-white"
                                 />
                               </div> */}
-                            </div>
+                              </div>
 
-                            <p className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-500 to-yellow-500 text-xl">
-                              {community.owner}
-                            </p>
-                            <br />
-                            <h3 className="mb-3">Community Roles</h3>
-                            <>
-                              {rolesToShow.map((role: RoleType, index) => (
-                                <p
-                                  key={index}
-                                  className="flex items-center text-gray-200 mb-2"
-                                >
-                                  <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-dxt-accents-3 text-white rounded-full flex-shrink-0">
-                                    <svg
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="2.5"
-                                      className="w-3 h-3"
-                                      viewBox="0 0 24 24"
-                                    >
-                                      <path d="M20 6L9 17l-5-5"></path>
-                                    </svg>
-                                  </span>
-                                  {role.name}
-                                </p>
-                              ))}
-                              {remainingRoles > 0 && (
-                                <p className="text-gray-400">
-                                  +{remainingRoles} more roles
-                                </p>
-                              )}
-                            </>
+                              <p className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-500 to-yellow-500 text-xl">
+                                {community.owner}
+                              </p>
+                              <br />
+                              <h3 className="mb-3">Community Roles</h3>
+                              <>
+                                {rolesToShow.map((role: RoleType, index) => (
+                                  <p
+                                    key={index}
+                                    className="flex items-center text-gray-200 mb-2"
+                                  >
+                                    <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-dxt-accents-3 text-white rounded-full flex-shrink-0">
+                                      <svg
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2.5"
+                                        className="w-3 h-3"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path d="M20 6L9 17l-5-5"></path>
+                                      </svg>
+                                    </span>
+                                    {role.name}
+                                  </p>
+                                ))}
+                                {remainingRoles > 0 && (
+                                  <p className="text-gray-400">
+                                    +{remainingRoles} more roles
+                                  </p>
+                                )}
+                              </>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                   </div>
                 ) : (
                   <section className="bg-gray-900 text-white h-screen">
-                  <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-                    <div className="mx-auto max-w-lg text-center">
-                      <h2 className="text-3xl font-bold sm:text-4xl">
-                        Fetching your data...
-                      </h2>
+                    <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+                      <div className="mx-auto max-w-lg text-center">
+                        <h2 className="text-3xl font-bold sm:text-4xl">
+                          Fetching your data...
+                        </h2>
+                      </div>
                     </div>
-                  </div>
-                </section>
+                  </section>
                 )}
               </div>
             </section>

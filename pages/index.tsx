@@ -39,17 +39,16 @@ const Home: NextPage = () => {
             </div>
             <div className="container pt-16 my-auto mx-auto flex flex-wrap flex-col md:flex-row items-center">
               <div className="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
-                <h1 className="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
-                  See your <br />
+                <h1 className="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left leading-8">
+                  See all your <br />
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-500 to-yellow-500">
-                    Collab.Land Communities
+                    Collab.Land Data
                   </span>{" "}
                   <br />
                   in one place
                 </h1>
                 <p className="leading-normal text-base md:text-2xl mb-8 text-center md:text-left text-gray-200 ">
-                  Connect your wallet, authenticate with Discord, and see your
-                  communities and roles.
+                  Login with Collab.Land to see all your data, communities and roles
                 </p>
                 <div className="flex sm:flex-row flex-col gap-2">
                   <Link
